@@ -907,7 +907,7 @@ if __name__ == "__main__":
     application.add_error_handler(error_handler)
 
     # ✅ Use Webhooks instead of Polling
-    port = int(os.environ.get("PORT", 5000))  # Get the port from Render
+    port = int(os.environ.get("PORT", 4000))  # Get the port from Render
     application.run_webhook(
         listen="0.0.0.0",
         port=port,
