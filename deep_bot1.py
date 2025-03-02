@@ -900,12 +900,17 @@ if __name__ == "__main__":
     application.add_handler(CommandHandler("leaderboard", leaderboard_cmd))
     application.add_handler(CommandHandler("mocktest", mocktest))
     application.add_handler(CommandHandler("TQ", handle_TQ))
-    # application.add_handler(MessageHandler(filters.Document.ALL | filters.PHOTO, handle_IQ))
-    
 
     # Poll answer handler for daily quiz scoring.
     application.add_handler(PollAnswerHandler(poll_answer_handler))
 
     application.add_error_handler(error_handler)
 
-    application.run_polling()
+    # ✅ Use Webhooks instead of Polling
+    port = int(os.environ.get("PORT", 5000))  # Get the port from Render
+    application.run_webhook(
+        listen="0.0.0.0",
+        port=port,
+        webhook_url=f"https://{os.getenv('RENDER_EXTERNAL_HOSTNAME')}/{TELEGRAM_BOT_TOKEN}"
+    )
+
